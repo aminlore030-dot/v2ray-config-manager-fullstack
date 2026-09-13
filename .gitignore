@@ -1,0 +1,24 @@
+# Runtime secrets
+.env
+server/.env
+*.pem
+*.key
+
+# Runtime data
+data/
+server/data/
+*.db
+*.db-shm
+*.db-wal
+backups/
+
+# Tooling and operating systems
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Local test output
+coverage/
+.tmp/
+tmp/
