@@ -1,75 +1,93 @@
 # V2Ray Config Manager Pro
 
-A bilingual (English / فارسی), browser-based manager for importing, parsing, deduplicating, filtering, converting and exporting V2Ray/Xray configurations.
+مدیری برای مدیریت کانفیگ‌های V2Ray/Xray در مرورگر، با رابط فارسی و انگلیسی و پشتیبانی از حالت راست‌به‌چپ.
 
-## Open the application
+## ورود به برنامه
 
-### [Launch V2Ray Config Manager Pro](https://v2ray-config-manager-fullstack.vercel.app/)
+### [ورود به نسخه آنلاین](https://v2ray-config-manager-fullstack.vercel.app/)
 
-The link above is the hosted application.
+نسخه آنلاین برای استفاده سریع آماده است. برای ورود کاربران همین لینک را به اشتراک بگذارید.
 
-## Features
+## امکانات
 
-- English and Persian interface with RTL support
-- Import VLESS, VMess, Trojan, Shadowsocks, SSR, Hysteria, Hysteria2 and TUIC links
-- Import Clash YAML, sing-box JSON and Xray/V2Ray JSON
-- Parse plain-text and Base64 subscription content
-- Detect duplicate configurations
-- Search, filter, tag, compare and organize nodes
-- Convert and export supported formats
-- Local browser storage for offline use
-- Optional full-stack API, authentication, SQLite storage and scheduled health checks
+- رابط کاربری فارسی و انگلیسی با پشتیبانی کامل از RTL
+- واردکردن لینک‌های VLESS، VMess، Trojan، Shadowsocks، SSR، Hysteria، Hysteria2 و TUIC
+- واردکردن فایل‌های Clash YAML، sing-box JSON و Xray/V2Ray JSON
+- پردازش متن معمولی و اشتراک‌های Base64
+- شناسایی و حذف تکراری‌ها
+- جست‌وجو، فیلتر، برچسب‌گذاری، مقایسه و دسته‌بندی کانفیگ‌ها
+- تبدیل و خروجی‌گرفتن در قالب‌های پشتیبانی‌شده
+- ذخیره‌سازی محلی در مرورگر برای استفاده آفلاین
+- نسخه فول‌استک اختیاری با API، ورود کاربران، SQLite و بررسی سلامت زمان‌بندی‌شده
 
-## Quick use
+## راهنمای استفاده سریع
 
-1. Open the [live application](https://v2ray-config-manager-fullstack.vercel.app/).
-2. Paste configuration links, subscription content or supported JSON/YAML into the import area.
-3. Review the parse report before saving.
-4. Filter, tag or compare imported nodes.
-5. Export only the configurations you intend to use.
+1. [برنامه آنلاین](https://v2ray-config-manager-fullstack.vercel.app/) را باز کنید.
+2. لینک کانفیگ، متن اشتراک یا فایل JSON/YAML را در بخش ورود اطلاعات قرار دهید.
+3. گزارش پردازش را بررسی کنید تا موارد معتبر، نامعتبر و تکراری مشخص شوند.
+4. کانفیگ‌ها را جست‌وجو، فیلتر یا برچسب‌گذاری کنید.
+5. فقط موارد موردنیاز را خروجی بگیرید و در کلاینت V2Ray/Xray خود وارد کنید.
 
-## Run the offline frontend locally
+> نکته: این ابزار فقط کانفیگ‌ها را مدیریت و تبدیل می‌کند. معتبر بودن ساختار یک کانفیگ به معنی سالم یا امن بودن سرور مقصد نیست.
 
-After downloading the project files, serve them with any static HTTP server:
+## استفاده آفلاین
+
+نسخه استاتیک می‌تواند کانفیگ‌ها را داخل مرورگر پردازش، مرتب و خروجی‌گیری کند. اطلاعات در حافظه محلی همان مرورگر ذخیره می‌شود؛ بنابراین پیش از پاک‌کردن داده‌های سایت یا تعویض مرورگر، از اطلاعات خود خروجی پشتیبان بگیرید.
+
+برای اجرای محلی، فایل‌های پروژه را دریافت کنید و یک سرور ساده اجرا کنید:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Open `http://localhost:8080`. A local HTTP server is more reliable than opening `index.html` directly because browsers restrict some `file://` features.
-
-## Offline mode
-
-The static frontend can parse, organize and export configurations in the browser. Data is stored locally in the current browser profile. Clearing site data or switching browsers removes that local data, so export a backup first.
-
-Features that require a running backend are unavailable in static mode, including server accounts, shared databases, server-side subscription fetching, scheduled jobs, Telegram automation and real Xray/sing-box connectivity tests.
-
-## Full-stack architecture
+سپس به آدرس زیر بروید:
 
 ```text
-Browser UI -> Node.js REST API -> SQLite
-                    |
-                    +-> Xray-core / sing-box health tests
-                    +-> scheduled GitHub Actions worker
-                    +-> optional Telegram bot
+http://localhost:8080
 ```
 
-The backend requires Node.js 22.5 or newer because it uses built-in `node:sqlite`. GitHub Pages cannot run this backend; use the live deployment or a separate Node-compatible host for server features.
+اجرای پروژه با سرور محلی از بازکردن مستقیم `index.html` مطمئن‌تر است، چون مرورگرها برخی قابلیت‌ها را برای آدرس‌های `file://` محدود می‌کنند.
 
-## Security notes
+## محدودیت نسخه آفلاین
 
-- Never commit real UUIDs, passwords, API keys, worker tokens or subscription credentials.
-- Treat exported configurations as secrets.
-- Use a strong, unique administrator password for a server deployment.
-- Keep `AUTH_SECRET`, `WORKER_TOKEN` and Telegram tokens in hosting secrets.
-- A syntactically valid proxy configuration is not proof that the endpoint is safe or operational.
+در حالت استاتیک و آفلاین، این قابلیت‌ها فعال نیستند:
 
-## Review and testing status
+- حساب کاربری و ورود به سرور
+- دیتابیس مشترک بین کاربران
+- دریافت اشتراک از سمت سرور
+- کارهای زمان‌بندی‌شده
+- ربات تلگرام
+- تست واقعی اتصال با Xray یا sing-box
 
-The supplied project test suite contains 118 checks. During review, 111 passed and four underlying checks failed (the report shows seven failures because parent suites also fail). The browser compatibility suite passed. The remaining failures concerned test-fixture process launching, due-subscription test setup and worker-auth status handling; no exposed production credentials were found.
+این قابلیت‌ها به یک بک‌اند Node.js جداگانه نیاز دارند.
 
-Do not present the full-stack backend as production-ready until every CI check passes.
+## معماری نسخه فول‌استک
 
-## License
+```text
+رابط مرورگر -> API نود -> SQLite
+                    |
+                    +-> تست سلامت با Xray-core / sing-box
+                    +-> Worker زمان‌بندی‌شده با GitHub Actions
+                    +-> ربات تلگرام اختیاری
+```
 
-No open-source license was included in the supplied archive. All rights remain with the copyright holder until a license is added explicitly.
+بک‌اند به Node.js نسخه 22.5 یا بالاتر نیاز دارد، چون از `node:sqlite` داخلی استفاده می‌کند. GitHub Pages فقط فایل‌های استاتیک را اجرا می‌کند و برای اجرای API، ورود کاربران یا دیتابیس مناسب نیست.
+
+## نکات امنیتی مهم
+
+- هیچ UUID واقعی، رمز عبور، API Key، توکن Worker یا اطلاعات اشتراک را در مخزن عمومی قرار ندهید.
+- فایل‌های خروجی کانفیگ را مانند اطلاعات محرمانه نگهداری کنید.
+- برای حساب مدیر یک رمز طولانی و منحصربه‌فرد استفاده کنید.
+- مقدارهای `AUTH_SECRET`، `WORKER_TOKEN` و توکن تلگرام باید فقط در Secrets میزبان ذخیره شوند.
+- اگر توکنی در چت، README، لاگ یا commit قرار گرفت، آن را فوراً باطل و توکن جدید ایجاد کنید.
+- پیش از انتشار عمومی، تاریخچه commitها را نیز برای کلیدها و رمزهای قدیمی بررسی کنید.
+
+## وضعیت بررسی و تست
+
+مجموعه تست ارائه‌شده ۱۱۸ بررسی دارد. در بررسی اولیه، ۱۱۱ تست موفق و چند تست مرتبط با اجرای fixture پردازشی، زمان‌بندی اشتراک و وضعیت احراز هویت Worker ناموفق بودند. تست‌های سازگاری مرورگر موفق شدند و در بررسی فعلی کلید خصوصی یا اعتبارنامه واقعی پیدا نشد.
+
+تا زمانی که همه تست‌های CI موفق نشده‌اند، نسخه فول‌استک را برای استفاده عملیاتی حساس آماده تولید در نظر نگیرید.
+
+## مجوز استفاده
+
+در فایل دریافتی مجوز متن‌باز مشخصی وجود نداشت؛ بنابراین حقوق پروژه تا زمان افزودن License متعلق به صاحب اثر است.
